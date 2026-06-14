@@ -21,7 +21,7 @@
     <div class="landing-kicker">for people who break promises to themselves</div>
     <h1 class="landing-headline">Follow&nbsp;through,<br/><em>this time.</em></h1>
     <p class="landing-sub">Set long-term goals, tick each day you show up, watch your commitment compound into a visible streak—just like your GitHub calendar, but for the life you actually want.</p>
-    <button class="btn-primary" onclick="showScreen('dashboard')">Start my goals →</button>
+    <button class="btn-primary" id="landing-cta">Start my goals →</button>
   </main>
 
   <div class="landing-grid-bg" aria-hidden="true"></div>
@@ -31,10 +31,10 @@
 <div id="dashboard" class="screen">
 
   <nav class="topbar">
-    <span class="wordmark" onclick="showScreen('dashboard')" style="cursor:pointer">streaks<sup>✦</sup></span>
+    <span class="wordmark" style="cursor:pointer">streaks<sup>✦</sup></span>
     <div class="topbar-actions">
-      <button class="btn-ghost" onclick="showScreen('today')">Today's Plan</button>
-      <button class="btn-outline" onclick="openAddGoal()">+ New Goal</button>
+      <button class="btn-ghost">Today's Plan</button>
+      <button class="btn-outline">+ New Goal</button>
     </div>
   </nav>
 
@@ -72,7 +72,7 @@
         <div class="empty-icon">✦</div>
         <div class="empty-title">No goals yet.</div>
         <div class="empty-sub">Every chain starts with a single link. Add your first goal and begin.</div>
-        <button class="btn-primary" onclick="openAddGoal()">Add your first goal</button>
+        <button class="btn-primary">Add your first goal</button>
       </div>
     </div>
 
@@ -82,9 +82,9 @@
 <!-- ===== TODAY'S PLAN ===== -->
 <div id="today" class="screen">
   <nav class="topbar">
-    <span class="wordmark" onclick="showScreen('dashboard')" style="cursor:pointer">streaks<sup>✦</sup></span>
+    <span class="wordmark" style="cursor:pointer">streaks<sup>✦</sup></span>
     <div class="topbar-actions">
-      <button class="btn-ghost" onclick="showScreen('dashboard')">← All Goals</button>
+      <button class="btn-ghost">← All Goals</button>
     </div>
   </nav>
 
@@ -109,9 +109,9 @@
 <!-- ===== GOAL DETAIL ===== -->
 <div id="goal-detail" class="screen">
   <nav class="topbar">
-    <span class="wordmark" onclick="showScreen('dashboard')" style="cursor:pointer">streaks<sup>✦</sup></span>
+    <span class="wordmark" style="cursor:pointer">streaks<sup>✦</sup></span>
     <div class="topbar-actions">
-      <button class="btn-ghost" onclick="showScreen('dashboard')">← All Goals</button>
+      <button class="btn-ghost">← All Goals</button>
       <button class="btn-danger-ghost" id="delete-goal-btn">Delete</button>
     </div>
   </nav>
@@ -176,11 +176,11 @@
 </div>
 
 <!-- ===== ADD / EDIT GOAL MODAL ===== -->
-<div id="modal-overlay" class="modal-overlay" onclick="closeModal(event)">
+<div id="modal-overlay" class="modal-overlay">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal-header">
       <h3 id="modal-title" class="modal-title">New Goal</h3>
-      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <button class="modal-close">&times;</button>
     </div>
     <div class="modal-body">
       <label class="field-label">Goal title <span class="req">*</span></label>
@@ -203,9 +203,9 @@
 
       <label class="field-label">Priority</label>
       <div class="priority-picker" id="priority-picker">
-        <button type="button" class="priority-opt" data-val="High" onclick="selectPriority('High')">🔴 High</button>
-        <button type="button" class="priority-opt" data-val="Medium" onclick="selectPriority('Medium')">🟡 Medium</button>
-        <button type="button" class="priority-opt" data-val="Low" onclick="selectPriority('Low')">🟢 Low</button>
+        <button type="button" class="priority-opt" data-val="High">🔴 High</button>
+        <button type="button" class="priority-opt" data-val="Medium">🟡 Medium</button>
+        <button type="button" class="priority-opt" data-val="Low">🟢 Low</button>
       </div>
 
       <div class="date-row">
@@ -226,8 +226,8 @@
       <textarea id="goal-steps" class="field-input field-textarea" placeholder="e.g.&#10;5-minute warm-up&#10;25-minute run&#10;Log it in the tracker" rows="4"></textarea>
     </div>
     <div class="modal-footer">
-      <button class="btn-ghost" onclick="closeModal()">Cancel</button>
-      <button class="btn-primary" onclick="saveGoal()">Save Goal</button>
+      <button class="btn-ghost">Cancel</button>
+      <button class="btn-primary">Save Goal</button>
     </div>
   </div>
 </div>
