@@ -11,36 +11,30 @@
 </head>
 <body>
 
-<!-- ===== LANDING / ONBOARDING ===== -->
+<!-- LANDING -->
 <div id="landing" class="screen active">
   <header class="landing-header">
     <span class="wordmark">streaks<sup>✦</sup></span>
   </header>
-
   <main class="landing-main">
     <div class="landing-kicker">for people who break promises to themselves</div>
     <h1 class="landing-headline">Follow&nbsp;through,<br/><em>this time.</em></h1>
-    <p class="landing-sub">Set long-term goals, tick each day you show up, watch your commitment compound into a visible streak—just like your GitHub calendar, but for the life you actually want.</p>
+    <p class="landing-sub">Set long-term goals, tick each day you show up, watch your commitment compound into a visible streak — just like your GitHub calendar, but for the life you actually want.</p>
     <button class="btn-primary" id="landing-cta">Start my goals →</button>
   </main>
-
   <div class="landing-grid-bg" aria-hidden="true"></div>
 </div>
 
-<!-- ===== DASHBOARD ===== -->
+<!-- DASHBOARD -->
 <div id="dashboard" class="screen">
-
   <nav class="topbar">
-    <span class="wordmark" style="cursor:pointer">streaks<sup>✦</sup></span>
+    <span class="wordmark" id="logo-dashboard">streaks<sup>✦</sup></span>
     <div class="topbar-actions">
-      <button class="btn-ghost">Today's Plan</button>
-      <button class="btn-outline">+ New Goal</button>
+      <button class="btn-ghost" id="nav-today">Today's Plan</button>
+      <button class="btn-outline" id="nav-new-goal">+ New Goal</button>
     </div>
   </nav>
-
   <div class="dashboard-body">
-
-    <!-- Hero summary bar -->
     <div class="summary-bar">
       <div class="summary-card">
         <span class="summary-num" id="total-goals">0</span>
@@ -59,35 +53,29 @@
         <span class="summary-label">Completion Rate</span>
       </div>
     </div>
-
-    <!-- Goals list -->
     <div class="section-header">
       <h2 class="section-title">Your Goals</h2>
       <span class="section-sub" id="goals-date-label"></span>
     </div>
-
     <div id="goals-container" class="goals-container">
-      <!-- populated by JS -->
       <div class="empty-state" id="empty-state">
         <div class="empty-icon">✦</div>
         <div class="empty-title">No goals yet.</div>
         <div class="empty-sub">Every chain starts with a single link. Add your first goal and begin.</div>
-        <button class="btn-primary">Add your first goal</button>
+        <button class="btn-primary" id="empty-add-btn">Add your first goal</button>
       </div>
     </div>
-
   </div>
 </div>
 
-<!-- ===== TODAY'S PLAN ===== -->
+<!-- TODAY'S PLAN -->
 <div id="today" class="screen">
   <nav class="topbar">
-    <span class="wordmark" style="cursor:pointer">streaks<sup>✦</sup></span>
+    <span class="wordmark" id="logo-today">streaks<sup>✦</sup></span>
     <div class="topbar-actions">
-      <button class="btn-ghost">← All Goals</button>
+      <button class="btn-ghost" id="today-back">← All Goals</button>
     </div>
   </nav>
-
   <div class="today-body">
     <div class="today-header">
       <div>
@@ -99,23 +87,19 @@
         <span class="today-score-label">done</span>
       </div>
     </div>
-
-    <div id="today-tasks" class="today-tasks">
-      <!-- populated by JS -->
-    </div>
+    <div id="today-tasks" class="today-tasks"></div>
   </div>
 </div>
 
-<!-- ===== GOAL DETAIL ===== -->
+<!-- GOAL DETAIL -->
 <div id="goal-detail" class="screen">
   <nav class="topbar">
-    <span class="wordmark" style="cursor:pointer">streaks<sup>✦</sup></span>
+    <span class="wordmark" id="logo-detail">streaks<sup>✦</sup></span>
     <div class="topbar-actions">
-      <button class="btn-ghost">← All Goals</button>
+      <button class="btn-ghost" id="detail-back">← All Goals</button>
       <button class="btn-danger-ghost" id="delete-goal-btn">Delete</button>
     </div>
   </nav>
-
   <div class="detail-body">
     <div class="detail-meta">
       <span class="detail-priority-badge" id="detail-priority-badge"></span>
@@ -123,27 +107,12 @@
     </div>
     <h2 class="detail-title" id="detail-title"></h2>
     <p class="detail-description" id="detail-description"></p>
-
     <div class="detail-stats">
-      <div class="ds-card">
-        <span class="ds-num" id="ds-streak">0</span>
-        <span class="ds-label">Current Streak</span>
-      </div>
-      <div class="ds-card">
-        <span class="ds-num" id="ds-best">0</span>
-        <span class="ds-label">Best Streak</span>
-      </div>
-      <div class="ds-card">
-        <span class="ds-num" id="ds-total">0</span>
-        <span class="ds-label">Total Days Hit</span>
-      </div>
-      <div class="ds-card">
-        <span class="ds-num" id="ds-rate">0%</span>
-        <span class="ds-label">Completion Rate</span>
-      </div>
+      <div class="ds-card"><span class="ds-num" id="ds-streak">0</span><span class="ds-label">Current Streak</span></div>
+      <div class="ds-card"><span class="ds-num" id="ds-best">0</span><span class="ds-label">Best Streak</span></div>
+      <div class="ds-card"><span class="ds-num" id="ds-total">0</span><span class="ds-label">Total Days Hit</span></div>
+      <div class="ds-card"><span class="ds-num" id="ds-rate">0%</span><span class="ds-label">Completion Rate</span></div>
     </div>
-
-    <!-- Progress bar to deadline -->
     <div class="deadline-section">
       <div class="deadline-label-row">
         <span>Progress to deadline</span>
@@ -153,8 +122,6 @@
         <div class="deadline-bar-fill" id="deadline-bar-fill"></div>
       </div>
     </div>
-
-    <!-- Calendar grid -->
     <div class="calendar-section">
       <div class="calendar-legend">
         <span class="legend-dot done"></span><span>Completed</span>
@@ -164,34 +131,29 @@
       </div>
       <div id="calendar-grid" class="calendar-grid"></div>
     </div>
-
-    <!-- Daily breakdown suggestions -->
     <div class="breakdown-section">
       <h3 class="breakdown-title">Daily Action Plan</h3>
       <p class="breakdown-sub">Suggested micro-steps to achieve this goal each day</p>
       <div id="breakdown-tasks" class="breakdown-tasks"></div>
     </div>
-
   </div>
 </div>
 
-<!-- ===== ADD / EDIT GOAL MODAL ===== -->
+<!-- MODAL -->
 <div id="modal-overlay" class="modal-overlay">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal-header">
       <h3 id="modal-title" class="modal-title">New Goal</h3>
-      <button class="modal-close">&times;</button>
+      <button class="modal-close" id="modal-close-btn">&times;</button>
     </div>
     <div class="modal-body">
       <label class="field-label">Goal title <span class="req">*</span></label>
       <input id="goal-name" class="field-input" type="text" placeholder="e.g. Write 500 words every day" maxlength="80" />
-
       <label class="field-label">Description / why it matters</label>
       <textarea id="goal-desc" class="field-input field-textarea" placeholder="The deeper reason you want this..." rows="3"></textarea>
-
       <label class="field-label">Category</label>
       <select id="goal-category" class="field-input field-select">
-        <option value="Health">🏃 Health & Fitness</option>
+        <option value="Health">🏃 Health &amp; Fitness</option>
         <option value="Creative">✍️ Creative Work</option>
         <option value="Learning">📚 Learning</option>
         <option value="Career">💼 Career</option>
@@ -200,14 +162,12 @@
         <option value="Mindfulness">🧘 Mindfulness</option>
         <option value="Other">✦ Other</option>
       </select>
-
       <label class="field-label">Priority</label>
       <div class="priority-picker" id="priority-picker">
         <button type="button" class="priority-opt" data-val="High">🔴 High</button>
         <button type="button" class="priority-opt" data-val="Medium">🟡 Medium</button>
         <button type="button" class="priority-opt" data-val="Low">🟢 Low</button>
       </div>
-
       <div class="date-row">
         <div class="date-field">
           <label class="field-label">Start date <span class="req">*</span></label>
@@ -218,21 +178,19 @@
           <input id="goal-end" class="field-input" type="date" />
         </div>
       </div>
-
-      <label class="field-label">Daily commitment (one sentence — what does "done" look like?)</label>
+      <label class="field-label">Daily commitment — what does "done" look like?</label>
       <input id="goal-daily" class="field-input" type="text" placeholder="e.g. 30-minute run completed" maxlength="120" />
-
-      <label class="field-label">Suggested daily micro-steps (one per line)</label>
+      <label class="field-label">Daily micro-steps (one per line)</label>
       <textarea id="goal-steps" class="field-input field-textarea" placeholder="e.g.&#10;5-minute warm-up&#10;25-minute run&#10;Log it in the tracker" rows="4"></textarea>
     </div>
     <div class="modal-footer">
-      <button class="btn-ghost">Cancel</button>
-      <button class="btn-primary">Save Goal</button>
+      <button class="btn-ghost" id="modal-cancel-btn">Cancel</button>
+      <button class="btn-primary" id="modal-save-btn">Save Goal</button>
     </div>
   </div>
 </div>
 
-<!-- ===== TOAST ===== -->
+<!-- TOAST -->
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script src="app.js"></script>
