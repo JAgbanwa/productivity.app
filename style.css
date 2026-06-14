@@ -58,16 +58,19 @@ body {
 /* ---- Screens ---- */
 .screen { display: none; min-height: 100vh; }
 .screen.active { display: block; }
+.screen:not(.active) { display: none !important; }
 
 /* ============================================================
    LANDING
    ============================================================ */
 #landing {
   position: relative;
-  display: flex;
+  overflow: hidden;
+}
+#landing.active {
+  display: flex !important;
   flex-direction: column;
   min-height: 100vh;
-  overflow: hidden;
 }
 
 .landing-header {

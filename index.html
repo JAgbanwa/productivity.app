@@ -23,10 +23,11 @@ html{font-size:16px}
 body{background:var(--ink);color:var(--white);font-family:var(--fb);font-size:.9375rem;line-height:1.6;min-height:100vh;overflow-x:hidden}
 .screen{display:none;min-height:100vh}
 .screen.active{display:block}
+.screen:not(.active){display:none!important}
 
 /* LANDING */
 #landing{position:relative;overflow:hidden}
-#landing.active{display:flex;flex-direction:column}
+#landing.active{display:flex!important;flex-direction:column}
 .landing-header{padding:1.5rem 2rem;position:relative;z-index:2}
 .wordmark{font-family:var(--fm);font-size:1rem;font-weight:500;letter-spacing:.04em;color:var(--amber);cursor:pointer;user-select:none}
 .wordmark sup{font-size:.65em}
@@ -198,7 +199,7 @@ select.fi option{background:var(--ink3)}
     <div class="landing-kicker">for people who break promises to themselves</div>
     <h1 class="landing-headline">Follow&nbsp;through,<br/><em>this time.</em></h1>
     <p class="landing-sub">Set long-term goals, tick each day you show up, watch your commitment compound into a visible streak — just like your GitHub calendar, but for the life you actually want.</p>
-    <button id="btn-start" class="btn-primary">Start my goals →</button>
+    <button id="btn-start" class="btn-primary" type="button">Start my goals →</button>
   </main>
   <div class="grid-bg" aria-hidden="true"></div>
 </div>
@@ -355,8 +356,14 @@ select.fi option{background:var(--ink3)}
   function toast(msg,type){var t=g('toast');t.textContent=msg;t.className='toast show'+(type?' '+type:'');clearTimeout(t._t);t._t=setTimeout(function(){t.className='toast';},3000);}
 
   function screen(name){
-    ['landing','dashboard','today','goal-detail'].forEach(function(s){g(s).classList.remove('active');});
-    g(name).classList.add('active');
+    ['landing','dashboard','today','goal-detail'].forEach(function(s){
+      var el=g(s);
+      el.classList.remove('active');
+      el.style.setProperty('display','none','important');
+    });
+    var target=g(name);
+    target.classList.add('active');
+    target.style.setProperty('display',name==='landing'?'flex':'block','important');
     if(name==='dashboard')renderDashboard();
     if(name==='today')renderToday();
   }
@@ -393,7 +400,7 @@ select.fi option{background:var(--ink3)}
     if(!goals.length){es.style.display='flex';return;}
     es.style.display='none';
     var order={High:0,Medium:1,Low:2};
-    goals.slice().sort(function(a,b){return(order[a.priority]-order[b.priority])||a.endDate.localeCompare(b.endDate);})
+    goals.slice().sort(function(a,b){return(order[a.priority]-order[b.priority])||String(a.endDate||'').localeCompare(b.endDate||'');})
     .forEach(function(gl){c.insertBefore(makeCard(gl,t),es);});
   }
 
@@ -564,7 +571,7 @@ select.fi option{background:var(--ink3)}
   function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
   // Bind all buttons
-  g('btn-start').addEventListener('click',function(){screen('dashboard');});
+  g('btn-start').addEventListener('click',function(){screen('dashboard');openModal();});
   g('logo-db').addEventListener('click',function(){screen('dashboard');});
   g('logo-today').addEventListener('click',function(){screen('dashboard');});
   g('logo-det').addEventListener('click',function(){screen('dashboard');});
