@@ -2,6 +2,10 @@
 
 > You do not need more motivation. You need a system.
 
+- **Website name:** Momentum
+- **Local website:** [http://localhost:8080](http://localhost:8080)
+- **Repository:** [JAgbanwa/productivity.app](https://github.com/JAgbanwa/productivity.app)
+
 Momentum is a local-first goal operating system that turns an ambition into a path, a phased roadmap, and a checklist for today. It was redesigned for the **OpenAI Build Week Challenge** from the original Streaks accountability tracker.
 
 The product is built around one loop:
