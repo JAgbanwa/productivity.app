@@ -1,110 +1,141 @@
-# Streaks ✦ — Follow Through
+# Momentum ✦
 
-> A personal accountability tracker for people who break promises to themselves.
+> You do not need more motivation. You need a system.
 
-**Live app → [streaks.jamal.app](https://jagbanwa.github.io/productivity.app)**
+Momentum is a local-first goal operating system that turns an ambition into a path, a phased roadmap, and a checklist for today. It was redesigned for the **OpenAI Build Week Challenge** from the original Streaks accountability tracker.
 
----
+The product is built around one loop:
 
-## What it is
+**Name the outcome → choose a sustainable path → follow today → review visible proof → adapt without shame.**
 
-Streaks is a single-file web app (no backend, no account required) that helps you:
+## Why it exists
 
-- **Define long-term goals** with a start date, deadline, priority level, category, and daily commitment
-- **Track daily follow-through** using a GitHub-style commit calendar — every day you show up, you get a ✓ tick on the grid
-- **See streaks compound** — current streak, best streak, and overall completion rate, all calculated from your ticks
-- **Plan each day** — a prioritised daily plan view shows your goals sorted High → Medium → Low with actionable micro-steps for each
-- **Stay honest** — missed days show up in rose-red, done days in sage-green; the calendar doesn't lie
+Most goal products capture an intention and leave the difficult planning work to the user. A goal such as “build a stronger body” or “learn Spanish” is not actionable until someone decides:
 
-It's inspired by Jerry Seinfeld's "don't break the chain" method and GitHub's contribution calendar.
+- which approach fits the person;
+- what progression is realistic before the deadline;
+- what to do today;
+- how to recover after missed days; and
+- what evidence will count as progress.
 
----
+Momentum makes those decisions explicit. The user chooses the constraints; the product designs a system around them.
 
-## Features
+## What is included
 
-| Feature | Description |
-|---|---|
-| **Goal calendar** | A full date-range grid (like GitHub commits) for each goal. Click today's cell or the card button to tick a day |
-| **Priority system** | High 🔴 / Medium 🟡 / Low 🟢 — goals are sorted by priority throughout the app |
-| **Streak tracking** | Current streak, best streak, total days hit, and completion % per goal and globally |
-| **Today's Plan** | A single-page view showing every active goal's daily commitment, grouped by priority |
-| **Micro-step breakdown** | Each goal has user-defined or auto-generated daily action steps |
-| **Progress to deadline** | A visual bar showing how far through the goal's timeframe you are |
-| **Persistent storage** | Everything is saved in `localStorage` — no signup needed, works offline |
-| **Responsive** | Mobile-friendly layout down to 375px |
+### Goal-to-system onboarding
 
----
+The three-step designer captures the outcome, life area, start date, deadline, current level, weekly cadence, session duration, constraints, and preferred path.
 
-## How to use
+Paths change with the domain. Examples include:
 
-1. Open the app
-2. Click **New Goal** and fill in:
-   - A title ("Write 500 words daily")
-   - Why it matters (optional but recommended)
-   - Category, priority, start date, deadline
-   - What "done" looks like each day ("500 words written")
-   - Optional micro-steps (one per line)
-3. From the dashboard, hit **Tick today** on each goal you complete
-4. Click a goal card to see its full calendar and progress stats
-5. Use **Today's Plan** for a focused, prioritised task view each morning
+- Fitness: gym strength, calisthenics, or hybrid;
+- Learning: structured curriculum, project-first, or deliberate practice;
+- Career: portfolio sprint, skill stack, or network and ship;
+- Creative work: daily craft, project sprint, or publish loop;
+- Wellbeing, finance, and custom milestone systems.
 
----
+### Deterministic planning engine
 
-## Tech stack
+The local engine immediately produces a complete usable plan without signup, network access, or an API key. It creates:
 
-- Pure HTML + CSS + Vanilla JS — zero dependencies, zero build step
-- `localStorage` for persistence
-- Google Fonts (Instrument Serif + DM Sans + DM Mono) for typography
-- Fully static — works from any CDN or file system
+- a three-phase deadline-aware roadmap;
+- domain-specific daily work and recovery tasks;
+- stable task identifiers for long-term tracking;
+- realistic session time allocation;
+- a concrete success metric; and
+- safe, non-diagnostic fitness guidance.
 
----
+### GPT-5.6 Momentum Coach
 
-## Running locally
+When `OPENAI_API_KEY` is configured, the same-origin `/api/coach` endpoint uses the OpenAI Responses API to:
 
-```bash
-git clone https://github.com/JAgbanwa/productivity.app.git
-cd productivity.app
-# Open index.html in any browser — no server needed
-open index.html
+- refine the baseline roadmap while preserving the user’s constraints;
+- answer questions using the selected goal, current phase, real checklist state, and progress statistics;
+- suggest the smallest useful restart after a disruption;
+- return schema-constrained product actions such as **Open today** or **Rebalance**; and
+- avoid inventing completed work or guaranteeing outcomes.
+
+The API key stays on the server. Requests use `store: false`, bounded inputs, a 25-second timeout, and Structured Outputs. If the endpoint is missing or unavailable, the product quietly uses its context-aware offline coach.
+
+### Daily execution and visible proof
+
+- A single “next best action” on the overview;
+- task-level checklists with duration and purpose;
+- automatic active and recovery days;
+- GitHub-style practice calendars with partial and complete states;
+- clickable past/today squares for quick backfilling;
+- current and best streaks, proof days, task completion, and timeline progress;
+- adaptive session reduction that keeps the deadline and direction intact.
+
+### Product details judges can try immediately
+
+- **Explore a demo** seeds two realistic systems and progress histories.
+- All demo interactions are real and saved locally.
+- Existing `streaks_v2_*` local data is migrated automatically.
+- The UI is responsive, keyboard accessible, reduced-motion aware, and usable at mobile sizes.
+
+## Architecture
+
+```text
+Browser
+├── app.js                 product state, navigation, views, interaction
+├── planner.js             pure local planning + coaching engine
+├── localStorage           goals, evidence, coach history
+└── POST /api/coach        optional same-origin AI enhancement
+       └── Responses API   GPT-5.6 + Structured Outputs
 ```
 
-Or serve with Python:
+The deterministic engine is the product baseline, not a mock. GPT-5.6 adds judgment and adaptation where generative reasoning is valuable. This hybrid design keeps the first-run experience instant and makes AI failure graceful rather than catastrophic.
+
+## Run locally
+
+The core app has zero runtime dependencies:
 
 ```bash
 python3 -m http.server 8080
-# Visit http://localhost:8080
+# open http://localhost:8080
 ```
 
+Run validation:
+
+```bash
+npm test
+npm run check
+```
+
+## Enable the AI coach
+
+Deploy to Vercel and configure the server-side environment variable:
+
+```bash
+OPENAI_API_KEY=...
+OPENAI_MODEL=gpt-5.6   # optional; this is the current default
+```
+
+`api/coach.js` is a Vercel-compatible serverless function. The static product still works on GitHub Pages in offline-coach mode.
+
+Never place an OpenAI API key in browser code or commit a real `.env` file. See `.env.example` for the expected variables.
+
+## Responsible guidance
+
+Momentum is designed for planning and education, not medical diagnosis, treatment, financial advice, or guaranteed transformation. Fitness plans use general progression and recovery principles, tell users not to work through pain, and direct health concerns to qualified professionals. The coach treats missed days as planning evidence rather than a moral failure.
+
+## Tests
+
+The Node test suite covers:
+
+- deadline-to-phase plan generation;
+- domain-specific active/recovery task generation;
+- partial-day, full-day, and streak calculations;
+- plan rebalancing invariants;
+- offline restart coaching and fitness safety language;
+- private Responses API configuration and output extraction;
+- the allowlist of AI-triggerable product actions.
+
+## Build Week submission material
+
+See [SUBMISSION.md](./SUBMISSION.md) for a concise project description, differentiators, judging-criteria map, and a 90-second demo storyboard.
+
 ---
 
-## Deploying
-
-This app is deployed via **GitHub Pages** from the `main` branch root.
-
-To deploy your own fork:
-1. Fork the repository
-2. Go to **Settings → Pages**
-3. Set source to `Deploy from branch` → `main` → `/ (root)`
-4. Visit `https://<your-username>.github.io/productivity.app`
-
----
-
-## Design
-
-- **Palette**: near-black ink (`#0e0e0f`) with amber accent (`#e8a844`), sage green for success, rose for missed days
-- **Type**: Instrument Serif (display) + DM Sans (body) + DM Mono (data/numbers)
-- **Signature element**: The life-calendar grid — every day of your goal rendered as a small cell with a tactile ✓ tick for completed days
-
----
-
-## Roadmap ideas
-
-- [ ] Export progress as PNG / PDF
-- [ ] Goal templates (habits, fitness plans, writing schedules)
-- [ ] Optional reminders via browser notifications
-- [ ] Dark/light mode toggle
-- [ ] Cloud sync via a simple backend
-
----
-
-MIT License — built with intent for anyone who needs to follow through.
+Built with Codex for OpenAI Build Week. The original Streaks concept remains at the heart of Momentum: make the promise visible, then keep it one day at a time.
